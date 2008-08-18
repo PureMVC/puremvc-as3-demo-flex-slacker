@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" title="Splash" 
+	horizontalAlign="center" verticalAlign="middle"
+	width="100%" height="100%"
+	backgroundColor="#9D4DFF"
+	>
+<mx:Script>
+	<![CDATA[
+		
+	]]>
+</mx:Script>
+	<mx:Label text="Welcome to the Slacker Splash screen. No mediator required." fontSize="16"/>
+	<mx:Text text="&#xa;"/>
+	<mx:TextArea height="216" width="462" fontSize="12" fontFamily="courier">
+		<mx:htmlText>
+		<![CDATA[This is the SplashView, first child of the MainDisplay's ViewStack. 
+
+Although Flex has instantiated this child, it has not yet instantiated its siblings GalleryView, EditorView and ProfileView. 
+
+With 'creationPolicy='auto', Flex will create only the first visible child of a ViewStack or TabNavigator and defer instantiation of the others until they are navigated to for the first time. That is when the ViewStack or TabNavigator they are in has its selectedIndex property set to display the child in question. 
+
+This demo illustrates show to create and register Mediators for those deferred children when they are eventually created. 
+
+---------------------------------------------------
+HERES WHAT HAPPENS:
+---------------------------------------------------
+ 1) The Main MXML Application (Slacker) gets the ApplicationFacade instance *during* its creation.
+
+ 2) This initializes the Model, View, Controller and Facade instances, and registers STARTUP/StartupCommand with the controller. 
+
+ 3) Slacker completes its MXML creation process, instantiating an ApplicationControlBar with several buttons, as well as an instance of the MainDisplay component with the id 'mainDisplay'. The creation of MainDisplay led to the creation only of its first child SplashView.
+
+ 4) On creationComplete, Slacker calls facade.startup(this);
+
+ 5) The ApplicationFacade.startup method sends the STARTUP notification, passing the reference to Slacker, the app.
+
+ 6) The StartupCommand registers the ApplicationMediator passing it the reference to the app.
+
+ 7) Once registered, the ApplicationMediator registers the MainDisplayMediator passing it the reference to app.mainDisplay. It also adds event listeners to the app for Slacker.SHOW_GALLERY, Slacker.SHOW_EDITOR and Slacker.SHOW_PROFILE. It doesn't listen for or handle any Notifications, the ApplicationMediator merely relays your button presses into the system.
+
+ 8) When MainDisplayMediator is registered, its interests are listed as ApplicationFacade.GALLERY_MODE, ApplicationFacade.EDITOR_MODE and ApplicationFacade.PROFILE_MODE. It also adds event listeners to the mainDisplay for  MainDisplay.GALLERY_CREATED,  MainDisplay.EDITOR_CREATED and  MainDisplay.PROFILE_CREATED
+
+ 9) The system now awaits your input.
+
+10) You click one of the buttons on Slacker's ApplicationControlBar (Gallery, Editor or Profile)
+
+11) Slacker sends the corresponding event; Slacker.SHOW_GALLERY, Slacker.SHOW_EDITOR or Slacker.SHOW_PROFILE.
+
+12) The ApplicationMediator responds by sending a corresponding system notification ApplicationFacade.GALLERY_MODE, ApplicationFacade.EDITOR_MODE or ApplicationFacade.PROFILE_MODE
+
+13) The MainDisplayMediator handles the Notification by setting the mainDisplay.currentViewSelector to the corresponding selector value: MainDisplay.GALLERY, MainDisplay.EDITOR or MainDisplay.PROFILE 
+
+14) Inside MainDisplay, the selectedIndex of the ViewStack is bound to the currentViewSelector property, and so it changes to display the child you have selected by button press.
+
+15) If this is the first navigation to the selected child, it will be instantiated at this time, and on creationComplete, it will send MainDisplay.GALLERY_CREATED, MainDisplay.EDITOR_CREATED and MainDisplay.PROFILE_CREATED.
+
+16) Regardless if it was the first navigation, Flex binding inside the MainDisplay component will set its activeView property to the selectedChild of the ViewStack. 
+
+17) The MainDisplayMediator will respond by calling its checkForMediator method, which will register the appropriate mediator for the selected child mainDisplay.activeView only if it doesn't already exist.
+
+18) The Mediators for the children (GalleryViewMediator, EditorViewMediator or ProfileViewMediator) all do the same thing for the purposes of this demo.
+
+19) Once registered, the child's Mediator will set its child's message property to 'Hello from the newly created SomethingMediator'. It will also set an event listener on its child for the FlexEvent.HIDE event.  Since the Mediator's just been registered, we'd like this initial message to show the first time, we'll change it when you navigate away so that when you come back, it displays a different message.
+
+20) When you click on a different button this child's HIDE event is fired, and its Mediator sets its message to 'Hi again from your old friend SomethingMediator'. It removes the event listener for the HIDE event, as we only wanted to capture it the first time to change this message.
+
+21) Another child is displayed, with its 'Hello from the newly created SomethingMediator' message if it is the first time for that child.
+
+22) You click the first button again, displaying a child you've already selected.
+
+23) Again, steps 10-16 are executed, only this time its not the first time that child was selected. The child is still displayed and now shows the message that was written to it when it was hidden.
+		]]>
+		</mx:htmlText>
+	</mx:TextArea>
+
+
+
+
+</mx:Panel>

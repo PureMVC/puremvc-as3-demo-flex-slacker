@@ -1,0 +1,38 @@
+package org.puremvc.as3.demos.flex.slacker.view
+{
+	import flash.events.Event;
+	
+	import mx.events.FlexEvent;
+	
+	import org.puremvc.as3.demos.flex.slacker.view.components.EditorView;
+	import org.puremvc.as3.patterns.mediator.Mediator;
+
+	public class EditorViewMediator extends Mediator
+	{
+        public static const NAME:String = 'EditorViewMediator';
+       
+        public function EditorViewMediator( viewComponent:Object )
+        {
+            super( NAME, viewComponent );   
+        }
+
+		override public function onRegister():void
+		{
+			editorView.message.text = "Hello from the newly registered "+NAME;
+			editorView.addEventListener(FlexEvent.HIDE, onHide);
+		}
+		
+		protected function onHide(event:Event):void
+		{
+			editorView.message.text = "Hi there, its your old friend "+NAME;
+			editorView.removeEventListener(FlexEvent.HIDE, onHide);
+		}   
+		
+       
+        protected function get editorView():EditorView
+        {
+            return viewComponent as EditorView;
+        }
+	}
+	
+}
