@@ -1,3 +1,8 @@
+/*
+ PureMVC AS3 / Flex Demo - Slacker 
+ Copyright (c) 2008 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+ */
 package org.puremvc.as3.demos.flex.slacker.controller
 {
 	import org.puremvc.as3.demos.flex.slacker.view.ApplicationMediator;

@@ -1,3 +1,8 @@
+/*
+ PureMVC AS3 / Flex Demo - Slacker 
+ Copyright (c) 2008 Clifford Hall <clifford.hall@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+ */
 package org.puremvc.as3.demos.flex.slacker
 {
 	import org.puremvc.as3.demos.flex.slacker.controller.StartupCommand;
@@ -11,9 +16,6 @@ package org.puremvc.as3.demos.flex.slacker
 		public static const GALLERY_MODE:String = "galleryMode";
 		public static const PROFILE_MODE:String = "profileMode";
 		
-		/**
-		 * Factory Method
-		 */
 		public static function getInstance() : ApplicationFacade {
 			if ( instance == null ) instance = new ApplicationFacade( );
 			return instance as ApplicationFacade;
